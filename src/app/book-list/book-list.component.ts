@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BookService } from '../book.service';
 import { Book } from '../models/book.model';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -14,16 +15,11 @@ export class BookListComponent implements OnInit {
   constructor(private bookService: BookService){}
 
   ngOnInit() {
-    this.books = this.bookService.getBooks();
-  }
-
-  onDelete(id: number){
-    this.bookService.deleteBook(id);
-    //Refresh the book list
-    this.books = this.bookService.getBooks()
-  }
-
-  onEdit(book: Book){
+    this.bookService.getBooks().subscribe(books => {
+      this.books = books;
+    });
     
   }
+
+
 }
